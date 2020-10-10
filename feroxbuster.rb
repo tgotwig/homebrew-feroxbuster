@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'etc'
-
 class Feroxbuster < Formula
   desc 'Fast, simple, recursive content discovery tool written in Rust. 🦀'
   homepage 'https://github.com/epi052/feroxbuster'
@@ -14,16 +12,15 @@ class Feroxbuster < Formula
   end
 
   def install
-    config = 'ferox-config.toml'
-    example = 'ferox-config.toml.example'
-    config_dir = "#{Etc.getpwuid.dir}/Library/Application Support/feroxbuster"
+    config = "#{bin}/ferox-config.toml"
+    example = "#{bin}/ferox-config.toml.example"
 
     bin.install 'feroxbuster'
 
-    resource('ferox-config').stage do
-      system 'mkdir', '-p', config_dir
-      system 'cp', '-n', example, "#{config_dir}/#{config}"
-    end
+    resource('ferox-config').stage {
+      bin.install resource('ferox-config')
+      system 'cp', '-n', example, config
+    }
   end
 
   test do
