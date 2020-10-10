@@ -17,10 +17,10 @@ class Feroxbuster < Formula
 
     bin.install 'feroxbuster'
 
-    resource('ferox-config').stage {
+    resource('ferox-config').stage do
       bin.install resource('ferox-config')
       system 'cp', '-n', example, config
-    }
+    end
   end
 
   test do
